@@ -26,60 +26,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        <li>
-          <router-link to="widgets">
-            <i class="fa fa-th"></i> <span>Widgets</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-green">new</small>
-            </span>
-          </router-link>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-laptop"></i>
-            <span>UI Elements</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><router-link to="/general"><i class="fa fa-circle-o"></i> General</router-link></li>
-            <li><router-link to="/icons"><i class="fa fa-circle-o"></i> Icons</router-link></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-share"></i> <span>Multilevel</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-            <li class="treeview">
-              <a href="#"><i class="fa fa-circle-o"></i> Level One
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                <li class="treeview">
-                  <a href="#"><i class="fa fa-circle-o"></i> Level Two
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                  </a>
-                  <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-          </ul>
-        </li>
+        <Menu v-for="menu in menus" :menu="menu" :key="menu.name"/>
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -87,6 +34,44 @@
 </template>
 
 <script>
+import Menu from './Menu.vue'
 export default {
+  components: {
+    Menu
+  },
+  data() {
+    return {
+      menus: [],
+    }
+  },
+  created() {
+    this.getMenus()
+  },
+  methods: {
+    getMenus() {
+      const menus = []
+      menus.push({ name: 'Widgets', path: '/widgets' })
+      menus.push({
+        name: 'UI Elements',
+        list: [
+          { name: 'General', path: '/general' },
+          { name: 'Icons', path: '/icons' },
+        ],
+      })
+      menus.push({
+        name: 'Multilevel',
+        list: [
+          { name: 'Level One', path: '/' }, 
+          {
+            name: 'Level One', list: [
+              { name: 'Level Two', path: '/' },
+              { name: 'Level Two', list: [{ name: 'Level Three', path: '/' }]},
+            ],
+          }, 
+        ],
+      })
+      this.menus = menus
+    },
+  },
 }
 </script>
