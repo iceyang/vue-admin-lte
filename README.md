@@ -1,4 +1,6 @@
-# vue3-admin-lte
+# vue-admin-lte
+
+使用vue-cli3，整合了adminLTE。
 
 ## Project setup
 ```
